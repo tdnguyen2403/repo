@@ -1,20 +1,23 @@
-# Use an official Python runtime as a parent image
+# Sử dụng hình ảnh Python chính thức từ Docker Hub
 FROM python:3.8-slim
 
-# Set the working directory in the container
+# Đặt thư mục làm việc trong container
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Sao chép file requirements.txt vào thư mục làm việc
+COPY requirements.txt .
 
-# Install any needed packages specified in requirements.txt
+# Cài đặt các gói phụ thuộc từ requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-# Make port 80 available to the world outside this container
+# Sao chép toàn bộ mã nguồn của bạn vào thư mục làm việc
+COPY . .
+
+# Mở cổng 80 cho ứng dụng
 EXPOSE 80
 
-# Define environment variable
+# Đặt biến môi trường (nếu cần)
 ENV NAME World
 
-# Run app.py when the container launches
+# Chạy ứng dụng Python khi container khởi động
 CMD ["python", "app.py"]
